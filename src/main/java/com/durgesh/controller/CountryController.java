@@ -107,7 +107,7 @@ public class CountryController {
 	@DeleteMapping("/deleteCountry/{id}")
 	public ResponseEntity<AddResponse> deleteCountry(@PathVariable("id") int id) {
 		//return countryServicImpl.deleteCountry(id);
-		return new ResponseEntity<AddResponse>(countryServicImpl.deleteCountry(id),HttpStatus.OK);
+		return new ResponseEntity<AddResponse>(countryServicImpl.deleteCountryByID(id),HttpStatus.OK);
 	}
 
 }

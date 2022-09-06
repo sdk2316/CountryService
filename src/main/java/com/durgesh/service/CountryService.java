@@ -65,13 +65,20 @@ public class CountryService {
 
 	}
 	
-	public AddResponse deleteCountry(int id) {
+	public AddResponse deleteCountryByID(int id) {
 		
 		 countryRepository.deleteById(id);
 		AddResponse res=new AddResponse();
 		res.setMessage("Country Deleted");
 		res.setId(id);
 		return res;
+		
+	}
+	
+	public void deleteCountry(Country country) {
+		
+		 countryRepository.delete(country);
+		
 		
 	}
 

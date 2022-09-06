@@ -1,6 +1,8 @@
 package com.durgesh;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -108,5 +110,17 @@ public class ServiceMockitoTests {
 			assertEquals(country,countryService.updateCountry(country));
 	
 	}
+	
+	@Test
+	@Order(6)
+	public void test_deleteCountry() {
+		
+		 	Country  country=new Country(4,"Aus","sydney");
+		 	
+			countryService.deleteCountry(country);
+			verify(countryRepository,times(1)).delete(country);
+	
+	}
+
 
 }
