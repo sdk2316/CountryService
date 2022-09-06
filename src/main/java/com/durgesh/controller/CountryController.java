@@ -28,15 +28,22 @@ public class CountryController {
 	//http://localhost:8877/getcountries
 
 	@GetMapping("/getcountries")
-	public List<Country> getCountries() {
-		return countryServicImpl.getAllCountries();
+	public ResponseEntity<List<Country>> getCountries() {
+		try {
+			
+			return new ResponseEntity< List<Country>>(countryServicImpl.getAllCountries(),HttpStatus.FOUND);
+			
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 
 	}
 
 	@GetMapping("/getcountriesById/{id}")
 	public ResponseEntity<Country> getById(@PathVariable(value="id") int id) {
 		try {
-			return new ResponseEntity<Country>(countryServicImpl.getCountryById(id),HttpStatus.OK);
+			return new ResponseEntity<Country>(countryServicImpl.getCountryById(id),HttpStatus.FOUND);
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -50,7 +57,7 @@ public class CountryController {
 	public ResponseEntity<Country> getByName(@PathVariable("name") String name) {
 		try {
 			
-			return new ResponseEntity<Country>(countryServicImpl.getCountryByName(name),HttpStatus.OK);
+			return new ResponseEntity<Country>(countryServicImpl.getCountryByName(name),HttpStatus.FOUND);
 		} catch (Exception e) {
 			// TODO: handle exception
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
