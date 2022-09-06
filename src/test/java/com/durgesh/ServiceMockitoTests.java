@@ -94,5 +94,16 @@ public class ServiceMockitoTests {
 			assertEquals(country,countryService.addCountry(country));
 	
 	}
+	
+	@Test
+	@Order(5)
+	public void test_updateCountry() {
+		
+		 	Country  country=new Country(4,"Aus","sydney");
+		 
+			when(countryRepository.save(country)).thenReturn(country);//mocking 
+			assertEquals(country,countryService.updateCountry(country));
+	
+	}
 
 }
