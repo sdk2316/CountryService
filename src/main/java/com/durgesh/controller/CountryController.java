@@ -14,24 +14,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.durgesh.model.Country;
-import com.durgesh.service.CountryServiceImpl;
+import com.durgesh.service.CountryService;
 
 @RestController
 public class CountryController {
 
 	@Autowired
-	CountryServiceImpl countryServicImpl;
-	
-
-	
+	CountryService countryServicImpl;
 	
 	//http://localhost:8877/getcountries
 
 	@GetMapping("/getcountries")
 	public ResponseEntity<List<Country>> getCountries() {
 		try {
+			List<Country> countries = countryServicImpl.getAllCountries();
 			
-			return new ResponseEntity< List<Country>>(countryServicImpl.getAllCountries(),HttpStatus.FOUND);
+			return new ResponseEntity< List<Country>>(countries,HttpStatus.FOUND);
 			
 			
 		} catch (Exception e) {

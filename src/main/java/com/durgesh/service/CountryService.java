@@ -14,7 +14,7 @@ import com.durgesh.repository.CountryRepository;
 
 
 @Service
-public class CountryServiceImpl {
+public class CountryService {
 
 	@Autowired
 	CountryRepository countryRepository;
