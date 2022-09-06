@@ -65,5 +65,23 @@ public class ServiceMockitoTests {
 			assertEquals(countryId,countryService.getCountryById(countryId).getId());
 	
 	}
+	
+	@Test
+	@Order(3)
+	public void test_getCountryByName() {
+		 myCountries=new ArrayList<Country>();
+		 myCountries.add(new Country(1,"USA","Washington"));
+		 myCountries.add(new Country(2,"UK","London & manchester"));
+		 myCountries.add(new Country(3,"India","Delhi"));
+		 
+		String countryName="India";
+		 
+		//when(countryRepository.findById(countryId).get()).thenReturn((Country) myCountries);//mocking 
+		//countryService.getCountryById(countryId).getId();
+		 
+			when(countryRepository.findAll()).thenReturn(myCountries);//mocking 
+			assertEquals(countryName,countryService.getCountryByName(countryName).getCountryName());
+	
+	}
 
 }

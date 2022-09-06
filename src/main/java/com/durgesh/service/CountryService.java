@@ -43,7 +43,7 @@ public class CountryService {
 		List<Country> countries = countryRepository.findAll();
 		Country country=null;
 		for(Country c:countries) {
-			if(c.getCountryName().equals(countryName)) {
+			if(c.getCountryName().equalsIgnoreCase(countryName)) {
 				country=c;
 				
 			}
