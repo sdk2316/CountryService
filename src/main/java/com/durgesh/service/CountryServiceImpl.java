@@ -4,17 +4,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.durgesh.controller.AddResponse;
 import com.durgesh.model.Country;
 
-public class CountryServicImpl {
+@Component
+public class CountryServiceImpl {
 
 	static HashMap<Integer, Country> counrtyMap;
 
-	public CountryServicImpl() {
+	public CountryServiceImpl() {
+		
+		counrtyMap=new HashMap<Integer, Country>();
 		Country countryIndia = new Country(1, "India", "Delhi");
-		Country countryUsa = new Country(1, "USA", "Washington");
-		Country countryUk = new Country(1, "UK", "London");
+		Country countryUsa = new Country(2, "USA", "Washington");
+		Country countryUk = new Country(3, "UK", "London");
 
 		counrtyMap.put(1, countryIndia);
 		counrtyMap.put(2, countryUsa);
