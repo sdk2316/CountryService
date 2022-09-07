@@ -104,5 +104,22 @@ public class ControllerMockMvcTest {
 	
 	}
 	
+	@Test
+	@Order(3)
+	public void test_getCountryByName() throws Exception{
+		
+		country=new Country(1,"India","Delhi");
+		String countryName="India";
+		when(countryServicImpl.getCountryByName(countryName)).thenReturn(country);//mock
+		
+		
+		this.mockMvc.perform(get("/getcountries/countryname").param("name","India"))
+		.andExpect(status().isFound())
+		.andExpect(MockMvcResultMatchers.jsonPath(".id").value(1)) 
+		.andExpect(MockMvcResultMatchers.jsonPath(".countryName").value("India"))  
+		
+		.andExpect(MockMvcResultMatchers.jsonPath(".countryCapital").value("Delhi")) 
+		.andDo(print());
+	}
 
 }

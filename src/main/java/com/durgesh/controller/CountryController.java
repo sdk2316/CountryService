@@ -52,7 +52,7 @@ public class CountryController {
 		}
 	}
 //http://localhost:8877/getcountries/UK
-	@GetMapping("/getcountries/name")
+	@GetMapping("/getcountries/countryname")
 	public ResponseEntity<Country> getCountryByName(@RequestParam(value="name") String name) {
 		try {
 			
