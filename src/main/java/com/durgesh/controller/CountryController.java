@@ -66,7 +66,7 @@ public class CountryController {
 	
 	//http://localhost:8877/addCountry
 //	{
-//	    
+
 //	    "countryName": "Germany",
 //	    "countryCapital": "Dutch"
 //	}

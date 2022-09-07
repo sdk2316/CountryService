@@ -74,9 +74,9 @@ public class CountryControllerIntegrationTests {
 	@Order(4)
 	public void test_AddCountryIntegrationTest() throws Exception {
 
-		Country country = new Country(8, "Germany", "Dutch & Uk");
+		Country country = new Country(4, "Germany", "Dutch & Uk");
 
-		String expected = "{\r\n" + "    \"id\": 8,\r\n" + "    \"countryName\": \"Germany\",\r\n"
+		String expected = "{\r\n" + "    \"id\": 4,\r\n" + "    \"countryName\": \"Germany\",\r\n"
 				+ "    \"countryCapital\": \"Dutch & Uk\"\r\n" + "}";
 
 		RestTemplate restTemplate = new RestTemplate();
@@ -97,20 +97,46 @@ public class CountryControllerIntegrationTests {
 	@Order(5)
 	public void test_UpdateCountryIntegrationTest() throws Exception {
 
-		Country country = new Country(1, "Germany", "Dutch & Uk");
+		Country country = new Country(3, "Germany", "Dutch & Uk");
 
 		String expected = "{\r\n" + 
-				"    \"id\": 1,\r\n" + 
-				"    \"countryName\": \"Germany\",\r\n" + 
-				"    \"countryCapital\": \"Dutch & Uk\"\r\n" + 
-				"}";
+				"        \"id\": 3,\r\n" + 
+				"        \"countryName\": \"Germany\",\r\n" + 
+				"        \"countryCapital\": \"Dutch & Uk\"\r\n" + 
+				"    }";
 
 		RestTemplate restTemplate = new RestTemplate();
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		HttpEntity<Country> request = new HttpEntity<Country>(country, headers);
 
-		ResponseEntity<String> res = restTemplate.exchange("http://localhost:8877/updateCountry/1",HttpMethod.PUT,request, String.class);
+		ResponseEntity<String> res = restTemplate.exchange("http://localhost:8877/updateCountry/3",HttpMethod.PUT,request, String.class);
+
+		System.out.println(res.getBody());
+		System.out.println(res.getStatusCode());
+		
+		assertEquals(HttpStatus.OK,res.getStatusCode());
+		JSONAssert.assertEquals(expected, res.getBody(), false);
+	}
+	
+	@Test
+	@Order(6)
+	public void test_deleteCountryIntegrationTest() throws Exception {
+
+		Country country = new Country(2, "USA", "Washington");
+
+		String expected = " {\r\n" + 
+				"        \"id\": 2,\r\n" + 
+				"        \"countryName\": \"USA\",\r\n" + 
+				"        \"countryCapital\": \"Washington\"\r\n" + 
+				"    }";
+
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<Country> request = new HttpEntity<Country>(country, headers);
+
+		ResponseEntity<String> res = restTemplate.exchange("http://localhost:8877/deleteCountry/2",HttpMethod.DELETE,request, String.class);
 
 		System.out.println(res.getBody());
 		System.out.println(res.getStatusCode());
