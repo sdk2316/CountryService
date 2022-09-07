@@ -89,7 +89,7 @@ public class CountryController {
  * */	
 
 	@PutMapping("/updateCountry/{id}")
-	public ResponseEntity<Country> updateCountry(@PathVariable(value="")int id,@RequestBody Country country) {
+	public ResponseEntity<Country> updateCountry(@PathVariable(value="id")int id,@RequestBody Country country) {
 		
 		try {
 			Country existCountryId = countryServicImpl.getCountryById(id);

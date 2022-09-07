@@ -11,6 +11,7 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -89,6 +90,32 @@ public class CountryControllerIntegrationTests {
 		System.out.println(res.getStatusCode());
 		
 		assertEquals(HttpStatus.CREATED,res.getStatusCode());
+		JSONAssert.assertEquals(expected, res.getBody(), false);
+	}
+	
+	@Test
+	@Order(5)
+	public void test_UpdateCountryIntegrationTest() throws Exception {
+
+		Country country = new Country(1, "Germany", "Dutch & Uk");
+
+		String expected = "{\r\n" + 
+				"    \"id\": 1,\r\n" + 
+				"    \"countryName\": \"Germany\",\r\n" + 
+				"    \"countryCapital\": \"Dutch & Uk\"\r\n" + 
+				"}";
+
+		RestTemplate restTemplate = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		HttpEntity<Country> request = new HttpEntity<Country>(country, headers);
+
+		ResponseEntity<String> res = restTemplate.exchange("http://localhost:8877/updateCountry/1",HttpMethod.PUT,request, String.class);
+
+		System.out.println(res.getBody());
+		System.out.println(res.getStatusCode());
+		
+		assertEquals(HttpStatus.OK,res.getStatusCode());
 		JSONAssert.assertEquals(expected, res.getBody(), false);
 	}
 }
