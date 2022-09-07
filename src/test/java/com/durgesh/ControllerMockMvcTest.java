@@ -3,6 +3,7 @@ package com.durgesh;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -21,6 +22,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -31,6 +33,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.durgesh.controller.CountryController;
 import com.durgesh.model.Country;
 import com.durgesh.service.CountryService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest(classes = {ControllerMockMvcTest.class})
 @ContextConfiguration
@@ -120,6 +124,24 @@ public class ControllerMockMvcTest {
 		
 		.andExpect(MockMvcResultMatchers.jsonPath(".countryCapital").value("Delhi")) 
 		.andDo(print());
+	}
+	
+	
+	@Test
+	@Order(4)
+	public void test_AddCountry() throws Exception {
+		
+		 country=new Country(6,"Germany","Berlin");
+		
+		when(countryServicImpl.addCountry(country)).thenReturn(country);//mock
+		
+		ObjectMapper mapper=new ObjectMapper();
+		
+		String json=mapper.writeValueAsString(country);		
+		
+		this.mockMvc.perform(post("/addCountry").content(json).contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isCreated())
+				.andDo(print());
 	}
 
 }
