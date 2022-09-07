@@ -84,6 +84,19 @@ public class CountryControllerMockitoTests {
 		assertEquals(HttpStatus.FOUND, res.getStatusCode());
 		assertEquals(countryName, res.getBody().getCountryName());
 		
+	}
 	
+	@Test
+	@Order(4)
+	public void test_getAddCountry() {
+		
+		Country country=new Country(1,"India","Delhi");
+		
+		when(countryServicImpl.addCountry(country)).thenReturn(country);
+		ResponseEntity<Country> res = countryController.AddCountry(country);
+		
+		assertEquals(HttpStatus.CREATED, res.getStatusCode());
+		assertEquals(country, res.getBody());
+		
 	}
 }
