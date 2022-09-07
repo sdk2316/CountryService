@@ -43,5 +43,23 @@ public class CountryControllerIntegrationTests {
 		System.out.println(res.getStatusCode());
 		JSONAssert.assertEquals(expected,res.getBody(), false);
 	}
+	
+	
+	@Test
+	@Order(2)
+	void getAllContryByIdIntegrationTests() throws JSONException {
+		String expected="{\r\n" + 
+				"    \"id\": 1,\r\n" + 
+				"    \"countryName\": \"India\",\r\n" + 
+				"    \"countryCapital\": \"Delhi\"\r\n" + 
+				"}";
+		RestTemplate restTemplate=new RestTemplate();
+		
+		ResponseEntity<String> res = restTemplate.getForEntity("http://localhost:8877/getcountriesById/1", String.class);
+		
+		System.out.println(res.getBody());
+		System.out.println(res.getStatusCode());
+		JSONAssert.assertEquals(expected,res.getBody(), false);
+	}
 
 }
