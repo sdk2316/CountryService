@@ -49,7 +49,7 @@ public class CountryControllerMockitoTests {
 		mycountries.add(new Country(3,"UK","London"));
 		
 		// we using mockito 
-		when(countryServicImpl.getAllCountries()).thenReturn(mycountries);
+		when(countryServicImpl.getAllCountries()).thenReturn(mycountries);//mock
 		ResponseEntity<List<Country>> res = countryController. getCountries();
 		
 		assertEquals(HttpStatus.FOUND, res.getStatusCode());
@@ -63,7 +63,7 @@ public class CountryControllerMockitoTests {
 		
 		Country country=new Country(1,"India","Delhi");
 		int countryId=1;
-		when(countryServicImpl.getCountryById(countryId)).thenReturn(country);
+		when(countryServicImpl.getCountryById(countryId)).thenReturn(country);//mock
 		ResponseEntity<Country> res = countryController.getCountryById(countryId);
 		
 		assertEquals(HttpStatus.FOUND, res.getStatusCode());
@@ -78,7 +78,7 @@ public class CountryControllerMockitoTests {
 		
 		Country country=new Country(1,"India","Delhi");
 		String countryName="India";
-		when(countryServicImpl.getCountryByName(countryName)).thenReturn(country);
+		when(countryServicImpl.getCountryByName(countryName)).thenReturn(country);//mock
 		ResponseEntity<Country> res = countryController.getCountryByName(countryName);
 		
 		assertEquals(HttpStatus.FOUND, res.getStatusCode());
@@ -90,13 +90,36 @@ public class CountryControllerMockitoTests {
 	@Order(4)
 	public void test_AddCountry() {
 		
-		Country country=new Country(1,"India","Delhi");
+		Country country=new Country(1,"Germany","Berlin");
 		
-		when(countryServicImpl.addCountry(country)).thenReturn(country);
+		when(countryServicImpl.addCountry(country)).thenReturn(country);//mock
 		ResponseEntity<Country> res = countryController.AddCountry(country);
 		
 		assertEquals(HttpStatus.CREATED, res.getStatusCode());
 		assertEquals(country, res.getBody());
 		
 	}
+	
+	
+	@Test
+	@Order(4)
+	public void test_UpdateCountry() {
+		
+		Country country=new Country(3,"Japan","Tokyo");
+		int CountryId=3;
+		
+		when(countryServicImpl.getCountryById(CountryId)).thenReturn(country);// mock
+		
+		when(countryServicImpl.updateCountry(country)).thenReturn(country);
+		
+		ResponseEntity<Country> res = countryController.updateCountry(CountryId,country);
+		
+		assertEquals(HttpStatus.OK, res.getStatusCode());
+		assertEquals(CountryId, res.getBody().getId());
+		assertEquals("Japan", res.getBody().getCountryName());
+		assertEquals("Tokyo", res.getBody().getCountryCapital());
+		
+	}
+	
+	
 }
