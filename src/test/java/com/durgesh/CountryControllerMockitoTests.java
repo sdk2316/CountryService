@@ -56,4 +56,34 @@ public class CountryControllerMockitoTests {
 		assertEquals(3, res.getBody().size());
 		
 	}
+	
+	@Test
+	@Order(2)
+	public void test_getCountryById() {
+		
+		Country country=new Country(1,"India","Delhi");
+		int countryId=1;
+		when(countryServicImpl.getCountryById(countryId)).thenReturn(country);
+		ResponseEntity<Country> res = countryController.getCountryById(countryId);
+		
+		assertEquals(HttpStatus.FOUND, res.getStatusCode());
+		assertEquals(countryId, res.getBody().getId());
+		
+	
+	}
+	
+	@Test
+	@Order(3)
+	public void test_getCountryByName() {
+		
+		Country country=new Country(1,"India","Delhi");
+		String countryName="India";
+		when(countryServicImpl.getCountryByName(countryName)).thenReturn(country);
+		ResponseEntity<Country> res = countryController.getCountryByName(countryName);
+		
+		assertEquals(HttpStatus.FOUND, res.getStatusCode());
+		assertEquals(countryName, res.getBody().getCountryName());
+		
+	
+	}
 }

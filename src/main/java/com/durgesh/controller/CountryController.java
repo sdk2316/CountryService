@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.durgesh.model.Country;
@@ -39,7 +40,7 @@ public class CountryController {
 	}
 
 	@GetMapping("/getcountriesById/{id}")
-	public ResponseEntity<Country> getById(@PathVariable(value="id") int id) {
+	public ResponseEntity<Country> getCountryById(@PathVariable(value="id") int id) {
 		try {
 			return new ResponseEntity<Country>(countryServicImpl.getCountryById(id),HttpStatus.FOUND);
 
@@ -51,8 +52,8 @@ public class CountryController {
 		}
 	}
 //http://localhost:8877/getcountries/UK
-	@GetMapping("/getcountries/{name}")
-	public ResponseEntity<Country> getByName(@PathVariable("name") String name) {
+	@GetMapping("/getcountries/name")
+	public ResponseEntity<Country> getCountryByName(@RequestParam(value="name") String name) {
 		try {
 			
 			return new ResponseEntity<Country>(countryServicImpl.getCountryByName(name),HttpStatus.FOUND);
