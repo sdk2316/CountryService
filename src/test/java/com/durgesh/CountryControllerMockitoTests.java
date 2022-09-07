@@ -88,7 +88,7 @@ public class CountryControllerMockitoTests {
 	
 	@Test
 	@Order(4)
-	public void test_getAddCountry() {
+	public void test_AddCountry() {
 		
 		Country country=new Country(1,"India","Delhi");
 		
