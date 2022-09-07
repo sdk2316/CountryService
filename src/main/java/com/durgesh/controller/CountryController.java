@@ -106,9 +106,18 @@ public class CountryController {
 
 	//http://localhost:8877/deleteCountry/4
 	@DeleteMapping("/deleteCountry/{id}")
-	public ResponseEntity<AddResponse> deleteCountry(@PathVariable("id") int id) {
+	public ResponseEntity<Country> deleteCountry(@PathVariable("id") int id) {
 		//return countryServicImpl.deleteCountry(id);
-		return new ResponseEntity<AddResponse>(countryServicImpl.deleteCountryByID(id),HttpStatus.OK);
+		//return new ResponseEntity<AddResponse>(countryServicImpl.deleteCountryByID(id),HttpStatus.OK);
+		Country country=null;
+		try {
+		 country = countryServicImpl.getCountryById(id);
+		 countryServicImpl.deleteCountry(country);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<Country>(country,HttpStatus.OK);
 	}
 
 }

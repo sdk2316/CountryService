@@ -9,6 +9,7 @@ import java.util.List;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,6 +22,7 @@ import com.durgesh.service.CountryService;
 
 
 @SpringBootTest(classes = {CountryControllerMockitoTests.class})
+@TestMethodOrder(OrderAnnotation.class)
 public class CountryControllerMockitoTests {
 	
 	
@@ -110,7 +112,7 @@ public class CountryControllerMockitoTests {
 		
 		when(countryServicImpl.getCountryById(CountryId)).thenReturn(country);// mock
 		
-		when(countryServicImpl.updateCountry(country)).thenReturn(country);
+		when(countryServicImpl.updateCountry(country)).thenReturn(country);//mock
 		
 		ResponseEntity<Country> res = countryController.updateCountry(CountryId,country);
 		
@@ -120,6 +122,23 @@ public class CountryControllerMockitoTests {
 		assertEquals("Tokyo", res.getBody().getCountryCapital());
 		
 	}
+	
+	
+	@Test
+	@Order(5)
+	public void test_deleteCountry() {
+		
+		Country country=new Country(3,"Japan","Tokyo");
+		int CountryId=3;
+		
+		when(countryServicImpl.getCountryById(CountryId)).thenReturn(country);// mock
+		
+		ResponseEntity<Country> res = countryController.deleteCountry(CountryId);
+		
+		assertEquals(HttpStatus.OK, res.getStatusCode());
+		
+	}
+	
 	
 	
 }
