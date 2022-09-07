@@ -105,7 +105,7 @@ public class CountryControllerMockitoTests {
 	
 	
 	@Test
-	@Order(4)
+	@Order(5)
 	public void test_UpdateCountry() {
 		
 		Country country=new Country(3,"Japan","Tokyo");
@@ -126,7 +126,7 @@ public class CountryControllerMockitoTests {
 	
 	
 	@Test
-	@Order(5)
+	@Order(6)
 	public void test_deleteCountry() {
 		
 		Country country=new Country(3,"Japan","Tokyo");

@@ -2,8 +2,10 @@ package com.durgesh;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -142,6 +144,46 @@ public class ControllerMockMvcTest {
 		this.mockMvc.perform(post("/addCountry").content(json).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isCreated())
 				.andDo(print());
+	}
+	
+	@Test
+	@Order(5)
+	public void test_UpdateCountry() throws Exception {
+		
+		Country country=new Country(3,"Japan","Tokyo");
+		int CountryId=3;
+		
+		when(countryServicImpl.getCountryById(CountryId)).thenReturn(country);// mock
+		
+		when(countryServicImpl.updateCountry(country)).thenReturn(country);//mock
+		
+		ObjectMapper mapper=new ObjectMapper();
+		
+		String json=mapper.writeValueAsString(country);		
+		
+		this.mockMvc.perform(put("/updateCountry/{id}",CountryId)
+				.content(json).contentType(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath(".countryName").value("Japan"))  	
+				.andExpect(MockMvcResultMatchers.jsonPath(".countryCapital").value("Tokyo")) 
+				.andDo(print());
+		
+	}
+	
+	@Test
+	@Order(6)
+	public void test_deleteCountry() throws Exception {
+		
+		Country country=new Country(3,"Japan","Tokyo");
+		int CountryId=3;
+		
+		when(countryServicImpl.getCountryById(CountryId)).thenReturn(country);// mock
+		
+		this.mockMvc.perform(delete("/deleteCountry/{id}",CountryId))
+				
+		.andExpect(status().isOk());
+		
+		
 	}
 
 }
