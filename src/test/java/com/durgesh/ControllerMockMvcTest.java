@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MockMvcBuilder;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.durgesh.controller.CountryController;
@@ -82,6 +83,25 @@ public class ControllerMockMvcTest {
 		.andDo(print());
 		
 		
+	}
+	
+	@Test
+	@Order(2)
+	public void test_getCountryById()  throws Exception{
+		
+		Country country=new Country(1,"India","Delhi");
+		int countryId=1;
+		when(countryServicImpl.getCountryById(countryId)).thenReturn(country);//mock
+		
+		this.mockMvc.perform(get("/getcountriesById/{id}",countryId))
+		.andExpect(status().isFound())
+		.andExpect(MockMvcResultMatchers.jsonPath(".id").value(1)) 
+		.andExpect(MockMvcResultMatchers.jsonPath(".countryName").value("India"))  
+		
+		.andExpect(MockMvcResultMatchers.jsonPath(".countryCapital").value("Delhi")) 
+		.andDo(print());
+		
+	
 	}
 	
 
